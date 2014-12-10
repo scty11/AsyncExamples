@@ -9,13 +9,24 @@ namespace TestingAsync
 {
     class AsyncExample
     {
-        static void Example()
+        public static void Example()
         {
-            var t = GetTitleCsAsync(
-                "http://www.pluralsight-training.net/microsoft/Products/Individual");            
             Console.WriteLine("Returned");
-            string title = t.Result;
-            Console.WriteLine(title);
+            var r = GetTitleCsAsync(
+                "http://www.pluralsight-training.net/microsoft/Products/Individual");
+            Console.WriteLine("Returned");
+            var t = GetTitleCsAsync("http://www.bbc.co.uk/news/");
+            Console.WriteLine("Returned");
+
+            Task<string>[] data = { t, r };
+            var result = Task.WaitAny(data);
+            Console.WriteLine(data[result].Result);
+
+           // string title = t.Result;
+           // Console.WriteLine(title);
+           //title = r.Result;
+           // Console.WriteLine(title);
+            Console.ReadLine();
         }
         //this is the same as the one below but instead of a 
         static async Task<string> GetTitleCsAsync(string url)

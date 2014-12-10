@@ -4,3 +4,9 @@ C:\Users\scottyboi\Documents\jquery\code\threading\MyBuild\TestingAsync\TestingA
 C:\Users\scottyboi\Documents\jquery\code\threading\MyBuild\TestingAsync\TestingAsync\bin\Debug\TestingAsync.pdb
 C:\Users\scottyboi\Documents\jquery\code\threading\MyBuild\TestingAsync\TestingAsync\obj\Debug\TestingAsync.exe
 C:\Users\scottyboi\Documents\jquery\code\threading\MyBuild\TestingAsync\TestingAsync\obj\Debug\TestingAsync.pdb
+C:\Users\scottyboi\Documents\GitHub\AsyncExamples\TestingAsync\TestingAsync\bin\Debug\TestingAsync.exe.config
+C:\Users\scottyboi\Documents\GitHub\AsyncExamples\TestingAsync\TestingAsync\obj\Debug\TestingAsync.exe
+C:\Users\scottyboi\Documents\GitHub\AsyncExamples\TestingAsync\TestingAsync\obj\Debug\TestingAsync.pdb
+C:\Users\scottyboi\Documents\GitHub\AsyncExamples\TestingAsync\TestingAsync\bin\Debug\TestingAsync.exe
+C:\Users\scottyboi\Documents\GitHub\AsyncExamples\TestingAsync\TestingAsync\bin\Debug\TestingAsync.pdb
+C:\Users\scottyboi\Documents\GitHub\AsyncExamples\TestingAsync\TestingAsync\obj\Debug\TestingAsync.csprojResolveAssemblyReference.cache
