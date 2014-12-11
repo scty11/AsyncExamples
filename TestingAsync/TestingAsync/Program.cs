@@ -11,9 +11,10 @@ namespace TestingAsync
          static void Main(string[] args)
         {
 
-            //Example();
-            AsyncExample.Example();
-           
+            Example();
+            //AsyncExample.Example();
+            //SecondExample();
+            Console.ReadLine();
                       
         }
 
@@ -45,6 +46,87 @@ namespace TestingAsync
             
              Console.WriteLine("Finnished");
              Console.ReadLine();
+         }
+
+         static void SecondExample()
+         {
+             var t1 = Task.Run(() =>
+             {
+                 int abc = 0;
+                 int x = 1000 / abc;
+                 return x;
+             });
+
+             var t2 = Task.Run(() =>
+             {
+                 int abc = 0;
+                  int x = 1000 / abc;
+                  return x;
+             });
+
+             var t3 = t2.ContinueWith((task) => 
+             {
+                 int y = t2.Result;
+                 return y;
+             });
+             try
+             {
+                 
+                 var tasks = new List<Task<int>> { t1, t2, t3 };
+                 //Task.Factory.ContinueWhenAll(tasks.ToArray(), (setOfTasks) =>
+                 //{
+                     
+                 //});
+                 //Task.Factory.ContinueWhenAny(tasks.ToArray(), (firstTask) => 
+                 //{
+ 
+                 //});
+                 //var index = Task.WaitAny(tasks); 
+                 //var result = tasks[index].Exception;
+                 //if (result != null)
+                 //{
+                 //    throw result;
+                 //}
+                 
+                 //while (tasks.Count > 0)
+                 //{
+                    
+                 //    int winner = Task.WaitAny(tasks.ToArray());  
+
+
+                 //    // was task successful?  Check exception here:
+                 //    if (tasks[winner].Exception == null)  // success!
+                 //    {
+                 //        var result = tasks[winner].Result;
+                 //        tasks.RemoveAt(winner);
+                         
+                 //    }
+
+                 //    // else this task failed, wait for next to finish:
+                 //    tasks.RemoveAt(winner);
+                     
+                 //}
+                 
+                 //Task.WaitAll(new Task[] { t1, t2, t3 }); //the exception if any will be thrown
+
+                 //var tasks = new Task<int>[] { t1, t2, t3 };
+                 //var result = Task.WhenAny(tasks);
+                 //Console.WriteLine(result.Result.Result);//could remove this
+
+                 //var tasks = new Task<int>[] { t1, t2, t3 };
+                 //var result = Task.WhenAll(tasks);//only thrown when accessed
+                 //var value = tasks[0].Result;
+                 
+
+             }
+             catch (AggregateException ae)
+             {
+                 Console.WriteLine();
+
+                 ae = ae.Flatten();  // could have a tree of exceptions, so flatten first:
+                 foreach (Exception ex in ae.InnerExceptions)
+                     Console.WriteLine("Tasking error: {0}", ex.Message);
+             }
          }
         static async Task<string> Amethod()
         {
