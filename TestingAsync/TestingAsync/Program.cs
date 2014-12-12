@@ -3,49 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace TestingAsync
 {
     class Program
     {
+        
          static void Main(string[] args)
         {
 
             Example();
             //AsyncExample.Example();
             //SecondExample();
-            Console.ReadLine();
+            //ParamTaskExample();
+            //Console.ReadLine();
                       
         }
 
          static void Example()
          {
-             var s = Amethod();
-             var r = SecondMethod();
+             CancellationTokenSource c1 = new CancellationTokenSource();
+             CancellationTokenSource c2;
+             //var s = Amethod();
+             //var r = SecondMethod();
 
              Console.WriteLine("Returned");
-
-             var sc = Task.Run(async () =>
+             try
              {
-                 await Task.Delay(1000);
-                 Console.WriteLine("Scott");
-             });
+                 var token = c1.Token;
+                 var sc = Task.Run(async () =>
+                 {
+                     await Task.Delay(2000);
+                     token.ThrowIfCancellationRequested();
+                     Console.WriteLine("Scott");
 
-             Console.WriteLine("Second Returned");
-
-             sc.ContinueWith((any) =>
+                 }, token);
+                 c1.Cancel();
+                 Console.WriteLine("Second Returned");
+                 sc.Wait();
+                 sc.ContinueWith((any) =>
+                 {
+                     if (any.Exception != null)
+                         throw any.Exception;
+                     Console.WriteLine("Something");
+                     
+                 });
+             }
+             catch (AggregateException ae)
              {
-                 Console.WriteLine("Something");
-             });
+                 Console.WriteLine();
+
+                 ae = ae.Flatten();  // could have a tree of exceptions, so flatten first:
+                 foreach (Exception ex in ae.InnerExceptions)
+                     Console.WriteLine("Tasking error: {0}", ex.Message);
+             }
              //s.Wait();
              Console.WriteLine("Third Return");
-             var t = Task.WhenAll(new Task[] { s, r});          
+             //var t = Task.WhenAll(new Task[] { s, r});          
              //r.Wait();
-             Console.WriteLine(s.Result + " " + r.Result);
+             //Console.WriteLine(s.Result + " " + r.Result);
 
             
              Console.WriteLine("Finnished");
-             Console.ReadLine();
+             //Console.ReadLine();
          }
 
          static void SecondExample()
@@ -140,6 +161,18 @@ namespace TestingAsync
             return "Lee Clark";
         }
 
+        static void ParamTaskExample()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                var t = Task.Factory.StartNew((param) => 
+                {
+                    int result = (int)param;
+                    Console.WriteLine("The result: {0}", param);
+                    
+                },i);
+            }
+        }
         
     }
 }

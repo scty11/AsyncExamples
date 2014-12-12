@@ -9,6 +9,7 @@ namespace TestingAsync
 {
     class AsyncExample
     {
+         
         public static void Example()
         {
             Console.WriteLine("Returned");
