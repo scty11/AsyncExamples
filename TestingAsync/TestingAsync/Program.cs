@@ -13,18 +13,19 @@ namespace TestingAsync
          static void Main(string[] args)
         {
 
-            Example();
+            //Example();
             //AsyncExample.Example();
             //SecondExample();
             //ParamTaskExample();
             //Console.ReadLine();
-                      
+            Part2Examples.Example();
+            Console.ReadKey();
         }
 
          static void Example()
          {
              CancellationTokenSource c1 = new CancellationTokenSource();
-             CancellationTokenSource c2;
+             //CancellationTokenSource c2;
              //var s = Amethod();
              //var r = SecondMethod();
 
@@ -66,7 +67,7 @@ namespace TestingAsync
 
             
              Console.WriteLine("Finnished");
-             //Console.ReadLine();
+             Console.ReadLine();
          }
 
          static void SecondExample()
@@ -93,7 +94,7 @@ namespace TestingAsync
              try
              {
                  
-                 var tasks = new List<Task<int>> { t1, t2, t3 };
+                 //var tasks = new List<Task<int>> { t1, t2, t3 };
                  //Task.Factory.ContinueWhenAll(tasks.ToArray(), (setOfTasks) =>
                  //{
                      
@@ -128,16 +129,17 @@ namespace TestingAsync
                      
                  //}
                  
-                 //Task.WaitAll(new Task[] { t1, t2, t3 }); //the exception if any will be thrown
+                 //Task.WaitAll(new Task[] { t1, t2, t3 }); //all exceptions if any will be thrown
+
+                 var tasks = new Task<int>[] { t1, t2, t3 };
+                 var result = Task.WhenAny(tasks);
+                 result.Wait();
+                 Console.WriteLine(result.Result.Result);//could remove this
 
                  //var tasks = new Task<int>[] { t1, t2, t3 };
-                 //var result = Task.WhenAny(tasks);
-                 //Console.WriteLine(result.Result.Result);//could remove this
-
-                 //var tasks = new Task<int>[] { t1, t2, t3 };
-                 //var result = Task.WhenAll(tasks);//only thrown when accessed
+                // var result = Task.WhenAll(tasks);//only thrown when accessed
                  //var value = tasks[0].Result;
-                 
+                 //Console.ReadLine();
 
              }
              catch (AggregateException ae)
@@ -148,6 +150,7 @@ namespace TestingAsync
                  foreach (Exception ex in ae.InnerExceptions)
                      Console.WriteLine("Tasking error: {0}", ex.Message);
              }
+             Console.ReadLine();
          }
         static async Task<string> Amethod()
         {
