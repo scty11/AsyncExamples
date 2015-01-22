@@ -38,6 +38,7 @@ namespace TestingAsync
                      await Task.Delay(2000);
                      token.ThrowIfCancellationRequested();
                      Console.WriteLine("Scott");
+                    
 
                  }, token);
                  c1.Cancel();
@@ -132,6 +133,7 @@ namespace TestingAsync
                  //Task.WaitAll(new Task[] { t1, t2, t3 }); //all exceptions if any will be thrown
 
                  var tasks = new Task<int>[] { t1, t2, t3 };
+                 //will be thrown when the result prop is accessed.
                  var result = Task.WhenAny(tasks);
                  result.Wait();
                  Console.WriteLine(result.Result.Result);//could remove this
@@ -166,6 +168,8 @@ namespace TestingAsync
 
         static void ParamTaskExample()
         {
+            //if not passed in each may have 10 as the 
+            //loop may have finnised beofre the threads are actually started.
             for (int i = 0; i < 10; i++)
             {
                 var t = Task.Factory.StartNew((param) => 
